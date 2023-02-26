@@ -1,2 +1,1 @@
-# MRM_System
-Medical Resources Management System
+# Medical Resources Management System (MRM System)
