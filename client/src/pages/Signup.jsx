@@ -19,6 +19,7 @@ function Signup() {
             setpname(e.target.value);
           }}
           className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+          required
         />
         <input
           type="email"
@@ -27,6 +28,7 @@ function Signup() {
             setEmail(e.target.value);
           }}
           className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+          required
         />
         <input
           type="text"
@@ -35,6 +37,7 @@ function Signup() {
             setAddress(e.target.value);
           }}
           className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+          required
         />
         <input
           type="number"
@@ -43,6 +46,7 @@ function Signup() {
             setNumber(e.target.value);
           }}
           className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+          required
         />
         <input
           type="number"
@@ -51,6 +55,7 @@ function Signup() {
             setLicense(e.target.value);
           }}
           className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+          required
         />
         <input
           type="password"
@@ -59,6 +64,7 @@ function Signup() {
             setPassword(e.target.value);
           }}
           className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+          required
         />
         <input
           type="password"
@@ -67,6 +73,7 @@ function Signup() {
             setCPassword(e.target.value);
           }}
           className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+          required
         />
         <div className="flex flex-row my-2 gap-5">
           <input type="checkbox" className="" />
