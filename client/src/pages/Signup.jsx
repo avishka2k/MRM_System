@@ -82,7 +82,9 @@ function Signup() {
         <button type="submit" className="bg-black text-white text-xl h-[4rem]">
           Sign Up
         </button>
-        <div className=" text-center mt-3">Already have an account? Sign in</div>
+        <div className=" text-center mt-3">
+          Already have an account? Sign in
+        </div>
       </form>
     </div>
   );

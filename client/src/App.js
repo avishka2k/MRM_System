@@ -1,11 +1,12 @@
 import PhamacyDashboard from "./pages/PhamacyDashboard";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
     <div className="">
-      <PhamacyDashboard/>
+      <BrowserRouter>
+        <PhamacyDashboard />
+      </BrowserRouter>
     </div>
   );
 }
