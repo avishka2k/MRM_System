@@ -4,8 +4,6 @@ function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-
   return (
     <div className="flex items-center place-content-center h-screen">
       <form className="flex flex-col w-[30rem] gap-5">
