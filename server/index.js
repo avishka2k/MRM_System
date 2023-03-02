@@ -48,5 +48,5 @@ app.post("/insert", async (req, res) => {
 
 
 app.listen(3003, () => {
-  console.log("server running on port "+ process.env.REACT_APP_PORT);
+  console.log("server running on port 3003...");
 });

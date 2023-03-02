@@ -13,7 +13,7 @@ function AdminDashboard() {
       <div className="w-full h-screen pt-[10rem] bg-slate-100  text-black">
         <div className="container m-auto">
           <div className="flex justify-between mb-10">
-            <p className="font-bold text-2xl">Inventory</p>
+            <p className="font-bold text-2xl">Pharmacies</p>
           </div>
           <div className="relative overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
