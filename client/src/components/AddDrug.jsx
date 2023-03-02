@@ -1,24 +1,32 @@
 import React, { useState } from "react";
+import Axios from "axios";
 
 function AddDrug({ isOpen, onClose }) {
   const [drugname, setDrugname] = useState("");
   const [manufacturer, setManufacturer] = useState("");
   const [supplier, setSupplier] = useState("");
-  const [NDC, setNDC] = useState("");
+  const [ndc, setNDC] = useState("");
   const [exDate, setExDate] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
+  //const [listOfDrug, setListOfDrugs] = useState([]);
 
-  const ddd = () => {
-    console.log(
-      drugname + manufacturer + supplier + NDC + exDate + quantity + price
-    );
+  const addToList = () => {
+    Axios.post(`http://localhost:${process.env.REACT_APP_PORT}/insert`, {
+      drugname,
+      manufacturer,
+      supplier,
+      ndc,
+      exDate,
+      quantity,
+      price,
+    });
   };
 
   return (
     <div className={`fixed  inset-0 ${isOpen ? "" : "hidden"}`}>
       <div className="flex items-center place-content-center h-screen bg-black bg-opacity-50">
-        <form onSubmit={ddd}>
+        <div>
           <div className="p-10 bg-white w-[60rem]">
             <div className="flex mb-10">
               <p className="font-bold text-2xl">Add new drug</p>
@@ -116,14 +124,14 @@ function AddDrug({ isOpen, onClose }) {
                 Cancel
               </button>
               <button
-                type="submit"
+                onClick={addToList}
                 className="bg-gray-400 w-full text-black text-xl h-[4rem]"
               >
                 Save
               </button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

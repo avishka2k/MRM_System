@@ -15,72 +15,72 @@ function AdminDashboard() {
           <div className="flex justify-between mb-10">
             <p className="font-bold text-2xl">Inventory</p>
           </div>
-          <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs h-16 uppercase bg-gray-300  text-black">
+          <div className="relative overflow-x-auto">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs h-16 uppercase bg-gray-300  text-black">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     ID
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Pharmacy name
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Pharmacy email
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Owner name
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Verification Status
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white text-black border-b">
-                  <td class="px-6 py-4">1</td>
-                  <td class="px-6 py-4">name1</td>
-                  <td class="px-6 py-4">lava</td>
-                  <td class="px-6 py-4">saf</td>
-                  <td class="px-6 py-4 ">
-                    <span class="bg-yellow-100  ml-8 text-yellow-800 text-sm font-medium px-[11px] py-0.5 rounded">
+                <tr className="bg-white text-black border-b">
+                  <td className="px-6 py-4">1</td>
+                  <td className="px-6 py-4">name1</td>
+                  <td className="px-6 py-4">lava</td>
+                  <td className="px-6 py-4">saf</td>
+                  <td className="px-6 py-4 ">
+                    <span className="bg-yellow-100  ml-8 text-yellow-800 text-sm font-medium px-[11px] py-0.5 rounded">
                       Pending
                     </span>
                   </td>
-                  <td class="px-6 py-4  flex gap-10 items-center">
+                  <td className="px-6 py-4  flex gap-10 items-center">
                     <MdDone className="text-green-800 cursor-pointer text-2xl" />
                     <MdClose className="text-red-600 cursor-pointer text-2xl" />
                   </td>
                 </tr>
-                <tr class="bg-white text-black border-b">
-                  <td class="px-6 py-4">1</td>
-                  <td class="px-6 py-4">name1</td>
-                  <td class="px-6 py-4">lava</td>
-                  <td class="px-6 py-4">saf</td>
-                  <td class="px-6 py-4">
-                    <span class="bg-red-100 ml-8 text-red-800 text-sm font-medium px-4 py-0.5 rounded ">
+                <tr className="bg-white text-black border-b">
+                  <td className="px-6 py-4">1</td>
+                  <td className="px-6 py-4">name1</td>
+                  <td className="px-6 py-4">lava</td>
+                  <td className="px-6 py-4">saf</td>
+                  <td className="px-6 py-4">
+                    <span className="bg-red-100 ml-8 text-red-800 text-sm font-medium px-4 py-0.5 rounded ">
                       Ignore
                     </span>
                   </td>
-                  <td class="px-6 py-4  flex gap-10 items-center">
+                  <td className="px-6 py-4  flex gap-10 items-center">
                     <MdDone className="text-green-800 cursor-pointer text-2xl" />
                     <MdClose className="text-red-600 cursor-pointer text-2xl" />
                   </td>
                 </tr>
-                <tr class="bg-white text-black border-b">
-                  <td class="px-6 py-4">1</td>
-                  <td class="px-6 py-4">name1</td>
-                  <td class="px-6 py-4">lava</td>
-                  <td class="px-6 py-4">saf</td>
-                  <td class="px-6 py-4">
-                    <span class="bg-green-100 ml-8 text-green-800 text-xs font-medium px-5 py-0.5 rounded">
+                <tr className="bg-white text-black border-b">
+                  <td className="px-6 py-4">1</td>
+                  <td className="px-6 py-4">name1</td>
+                  <td className="px-6 py-4">lava</td>
+                  <td className="px-6 py-4">saf</td>
+                  <td className="px-6 py-4">
+                    <span className="bg-green-100 ml-8 text-green-800 text-xs font-medium px-5 py-0.5 rounded">
                       Active
                     </span>
                   </td>
-                  <td class="px-6 py-4  flex gap-10 items-center">
+                  <td className="px-6 py-4  flex gap-10 items-center">
                     <MdDone className=" text-2xl text-green-800 cursor-pointer" />
                     <MdClose className="text-red-600 text-2xl cursor-pointer" />
                   </td>

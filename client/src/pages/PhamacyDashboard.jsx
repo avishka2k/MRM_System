@@ -11,7 +11,7 @@ function PhamacyDashboard() {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed w-full">
+    <div className="w-full">
       <Navbar />
       <div className="flex">
         <Menu

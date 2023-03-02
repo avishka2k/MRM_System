@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const Drug = new mongoose.Schema({
-  drug_name: {
+  drugid: {
+    type: Number,
+    require: true,
+  },
+  drugname: {
     type: String,
     require: true,
   },
@@ -9,26 +13,27 @@ const Drug = new mongoose.Schema({
     type: String,
     require: true,
   },
-//   supplier: {
-//     type: String,
-//     require: true,
-//   },
-//   ndc: {
-//     type: String,
-//     require: true,
-//   },
-//   expiration_date: {
-//     type: String,
-//     require: true,
-//   },
-//   quantity: {
-//     type: String,
-//     require: true,
-//   },
-//   unit_price: {
-//     type: String,
-//     require: true,
-//   },
+  supplier: {
+    type: String,
+    require: true,
+  },
+  ndc: {
+    type: String,
+    require: true,
+  },
+  exDate: {
+    type: String,
+    require: true,
+  },
+  quantity: {
+    type: String,
+    require: true,
+  },
+  price: {
+    type: String,
+    require: true,
+  },
 });
 
-module.exports = mongoose.model("Drug", Drug);
+const DrugModel = mongoose.model("drugs", Drug);
+module.exports = DrugModel;
