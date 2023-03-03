@@ -2,7 +2,7 @@
 
 
 
-<h1>Duothan 3 Web Application</h1>
+<h1>Duothan 3 Web Application (Redevelop)</h1>
 <h2>Introduction</h2>
 <p>This is a web application developed using the MERN stack. The application is called "Duothan 3", and it is designed to [insert brief description of the application's purpose].</p>
 
