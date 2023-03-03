@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import axios from "axios";
 
 function AddDrug({ isOpen, onClose }) {
   const [drugname, setDrugname] = useState("");
@@ -10,6 +11,7 @@ function AddDrug({ isOpen, onClose }) {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   //const [listOfDrug, setListOfDrugs] = useState([]);
+  const [drugdatapy, setDrugdatapy] = useState([]);
 
   const addToList = () => {
     Axios.post(`http://localhost:${process.env.REACT_APP_PORT}/insert`, {
@@ -23,6 +25,13 @@ function AddDrug({ isOpen, onClose }) {
     });
   };
 
+  useEffect(() => {
+    axios.get(`https://blog-apis-blue.vercel.app/products`).then((res) => {
+      setDrugdatapy(res.data);
+    });
+  }, []);
+
+  console.log(drugdatapy);
   return (
     <div className={`fixed  inset-0 ${isOpen ? "" : "hidden"}`}>
       <div className="flex items-center place-content-center h-screen bg-black bg-opacity-50">
@@ -41,11 +50,16 @@ function AddDrug({ isOpen, onClose }) {
                   }}
                   className="border-black border h-[4rem] text-xl px-5 placeholder:text-black focus:border-none"
                 >
-                  <option value="">Select drug name</option>
-                  <option value="drug1">Drug 1</option>
-                  <option value="drug2">Drug 2</option>
-                  <option value="drug3">Drug 3</option>
-                  <option value="drug4">Drug 4</option>
+                  <option value="" selected="true" disabled>
+                    Select drug name
+                  </option>
+                  {drugdatapy.map((drugpy, index) => {
+                    return (
+                      <option key={index} value={drugpy.drug_item}>
+                        {drugpy.drug_item}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="flex flex-col gap-3">
@@ -83,7 +97,7 @@ function AddDrug({ isOpen, onClose }) {
               </div>
               <div className="flex flex-col gap-3">
                 <input
-                  type="text"
+                  type="date"
                   placeholder="Select Expiration date"
                   onChange={(e) => {
                     setExDate(e.target.value);
