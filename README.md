@@ -44,4 +44,5 @@
 
 <h2>Reference</h2>
 <a href="https://github.com/IEEE-Student-Branch-NSBM/duothan-feb2023-guidelines/">Guidelines to Participate in Duothan 2023 Buildathon</a>
-
+<br>
+<a href="https://www.figma.com/file/2xH9lbzsJpRbvaCVcgfuYY/Duothan-3.0-Wireframe?node-id=0%3A1&t=WttHhqCBQiy7Sg16-1">Figma wireframe</a>
