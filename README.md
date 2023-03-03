@@ -25,7 +25,14 @@
 -->
 <h2>Features</h2>
 <ul>
-<li>[insert list of application features]</li>
+<li>Authentication (Sign Up/Sign In)</li>
+<li>Inventory Management</li>
+<li>Pharmacy Profile</li>
+<li>Admin Dashboard</li>
+<li>Pharmacies Table</li>
+<li>Approve & Manage Pharmacies</li>
+<li>Search Medicine</li>
+<li>Filter Results by location</li>
 </ul>
 
 <h2>Technologies Used</h2>
@@ -38,4 +45,7 @@
 
 <h2>License</h2>
 <p>[insert license information]</p>
+
+<h2>Reference</h2>
+<a href="https://github.com/IEEE-Student-Branch-NSBM/duothan-feb2023-guidelines/">Guidelines to Participate in Duothan 2023 Buildathon</a>
 
