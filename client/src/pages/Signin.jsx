@@ -4,13 +4,9 @@ function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const sss = () => {
-    console.log(email + password);
-  };
-
   return (
     <div className="flex items-center place-content-center h-screen">
-      <form onSubmit={sss} className="flex flex-col w-[30rem] gap-5">
+      <form className="flex flex-col w-[30rem] gap-5">
         <input
           type="text"
           placeholder="Email"
