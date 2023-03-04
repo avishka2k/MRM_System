@@ -1,7 +1,46 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { MdClose, MdDone } from "react-icons/md";
+import UserVerification from "./Verification";
 
 function AdminDashboard() {
+  const [userlist, setUserlist] = useState([]);
+  const [updatedUser, setUpdatedUser] = useState(null);
+  const [listOfUser, setListOfUser] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:${process.env.REACT_APP_PORT}/getuser`)
+      .then((res) => {
+        setUserlist(res.data);
+      });
+  });
+
+  const handleVerification = (userId) => {
+    axios
+      .put(
+        `http://localhost:${process.env.REACT_APP_PORT}/users/${userId}/verification`,
+        {
+          verification: true,
+        }
+      )
+      .then((res) => {
+        setUpdatedUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDeleteUser = (id) => {
+    axios
+      .delete(`http://localhost:${process.env.REACT_APP_PORT}/deleteuser/${id}`)
+      .then((res) => {
+        // Update the list of user after successful deletion
+        setListOfUser(listOfUser.filter((user) => user.id !== id));
+      });
+  };
+
   return (
     <div className="">
       <div className="z-[1000] bg-white fixed w-full h-20 flex">
@@ -40,51 +79,47 @@ function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-white text-black border-b">
-                  <td className="px-6 py-4">1</td>
-                  <td className="px-6 py-4">name1</td>
-                  <td className="px-6 py-4">lava</td>
-                  <td className="px-6 py-4">saf</td>
-                  <td className="px-6 py-4 ">
-                    <span className="bg-yellow-100  ml-8 text-yellow-800 text-sm font-medium px-[11px] py-0.5 rounded">
-                      Pending
-                    </span>
-                  </td>
-                  <td className="px-6 py-4  flex gap-10 items-center">
-                    <MdDone className="text-green-800 cursor-pointer text-2xl" />
-                    <MdClose className="text-red-600 cursor-pointer text-2xl" />
-                  </td>
-                </tr>
-                <tr className="bg-white text-black border-b">
-                  <td className="px-6 py-4">1</td>
-                  <td className="px-6 py-4">name1</td>
-                  <td className="px-6 py-4">lava</td>
-                  <td className="px-6 py-4">saf</td>
-                  <td className="px-6 py-4">
-                    <span className="bg-red-100 ml-8 text-red-800 text-sm font-medium px-4 py-0.5 rounded ">
-                      Ignore
-                    </span>
-                  </td>
-                  <td className="px-6 py-4  flex gap-10 items-center">
-                    <MdDone className="text-green-800 cursor-pointer text-2xl" />
-                    <MdClose className="text-red-600 cursor-pointer text-2xl" />
-                  </td>
-                </tr>
-                <tr className="bg-white text-black border-b">
-                  <td className="px-6 py-4">1</td>
-                  <td className="px-6 py-4">name1</td>
-                  <td className="px-6 py-4">lava</td>
-                  <td className="px-6 py-4">saf</td>
-                  <td className="px-6 py-4">
-                    <span className="bg-green-100 ml-8 text-green-800 text-xs font-medium px-5 py-0.5 rounded">
-                      Active
-                    </span>
-                  </td>
-                  <td className="px-6 py-4  flex gap-10 items-center">
-                    <MdDone className=" text-2xl text-green-800 cursor-pointer" />
-                    <MdClose className="text-red-600 text-2xl cursor-pointer" />
-                  </td>
-                </tr>
+                {userlist.length !== 0 ? (
+                  userlist &&
+                  userlist.length > 0 &&
+                  userlist.map((user, index) => (
+                    <tr key={index} className="bg-white text-black border-b">
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4">{user.pname}</td>
+                      <td className="px-6 py-4">{user.email}</td>
+                      <td className="px-6 py-4">{user.license}</td>
+                      <td className="px-6 py-4 ">
+                        {user.verification ? (
+                          <span className="bg-green-100 ml-8 text-green-800 font-medium px-5 py-0.5 rounded">
+                            Verified
+                          </span>
+                        ) : (
+                          <span className="bg-yellow-100  ml-8 text-yellow-800 font-medium px-[18px] py-0.5 rounded">
+                            Pending
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4  flex gap-10 items-center">
+                        {user.verification ? (
+                          <div className="pl-6"></div>
+                        ) : (
+                          <MdDone
+                            onClick={() => handleVerification(user._id)}
+                            className="text-green-800 cursor-pointer text-2xl"
+                          />
+                        )}
+                        <MdClose
+                          onClick={() => handleDeleteUser(user._id)}
+                          className="text-red-600 cursor-pointer text-2xl"
+                        />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className=" text-gray-600">
+                    <td className="pl-5 py-5">No User inserted</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

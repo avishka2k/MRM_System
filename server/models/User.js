@@ -1,35 +1,35 @@
 const mongoose = require("mongoose");
 
-const Drug = new mongoose.Schema({
-  drugname: {
+const User = new mongoose.Schema({
+  pname: {
     type: String,
     require: true,
   },
-  manufacturer: {
+  email: {
     type: String,
     require: true,
   },
-  supplier: {
+  password: {
     type: String,
     require: true,
   },
-  ndc: {
+  address: {
     type: String,
     require: true,
   },
-  exDate: {
+  number: {
     type: String,
     require: true,
   },
-  quantity: {
+  license: {
     type: String,
     require: true,
   },
-  price: {
-    type: String,
+  verification: {
+    type: Boolean,
     require: true,
   },
 });
 
-const DrugModel = mongoose.model("drugs", Drug);
-module.exports = DrugModel;
+const UserModel = mongoose.model("users", User);
+module.exports = UserModel;

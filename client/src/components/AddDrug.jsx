@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
 import axios from "axios";
 
 function AddDrug({ isOpen, onClose }) {
@@ -14,7 +13,7 @@ function AddDrug({ isOpen, onClose }) {
   const [drugdatapy, setDrugdatapy] = useState([]);
 
   const addToList = () => {
-    Axios.post(`http://localhost:${process.env.REACT_APP_PORT}/insert`, {
+    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/insert`, {
       drugname,
       manufacturer,
       supplier,
@@ -31,7 +30,6 @@ function AddDrug({ isOpen, onClose }) {
     });
   }, []);
 
-  console.log(drugdatapy);
   return (
     <div className={`fixed  inset-0 ${isOpen ? "" : "hidden"}`}>
       <div className="flex items-center place-content-center h-screen bg-black bg-opacity-50">
