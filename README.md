@@ -5,10 +5,12 @@
 <h2>Installation</h2>
 <ol>
 <li>Clone this repository.</li>
-<li>Navigate to the root directory of the application in your terminal.</li>
+<li>Navigate to the <code>server</code> directory using <code>cd server</code>.</li>
 <li>Run <code>npm install</code> to install the dependencies for the server.</li>
+<li>Run <code>node index.js</code> to run server.</li>
 <li>Navigate to the <code>client</code> directory using <code>cd client</code>.</li>
 <li>Run <code>npm install</code> to install the dependencies for the client.</li>
+<li>Run <code>npm start</code> to run the application.</li>
 </ol>
 <!--
 <h2>Usage</h2>
