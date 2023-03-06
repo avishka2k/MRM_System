@@ -3,9 +3,9 @@ import React, { useState } from "react";
 function ProfileContent() {
   const [pname, setPname] = useState();
   return (
-    <div className="w-full h-full text-black">
+    <div className="w-full max-w-[60rem] m-auto h-full text-black overflow-y-scroll">
       <form action="">
-        <div className="mx-20">
+        <div className="mx-20 ">
           <div className="flex mb-10">
             <p className="font-bold text-2xl">Pharmacy Information</p>
           </div>
@@ -17,7 +17,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -28,7 +28,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -39,7 +39,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -50,7 +50,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -61,7 +61,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -72,7 +72,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -83,7 +83,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -101,7 +101,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -112,7 +112,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -123,7 +123,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -134,7 +134,7 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
@@ -145,22 +145,22 @@ function ProfileContent() {
                 onChange={(e) => {
                   setPname(e.target.value);
                 }}
-                className="border-black border h-[4rem] text-xl p-5 placeholder:text-black focus:border-none"
+                className="border-black border h-[50px] text-xl p-5 placeholder:text-black focus:border-none"
                 required
               />
             </div>
           </div>
         </div>
-        <div className="flex w-full">
+        <div className="flex mx-20 gap-x-[2rem] my-[2rem]">
           <button
             type="reset"
-            className="bg-gray-200 w-full text-black text-xl h-[5rem] m-20"
+            className="bg-gray-200 w-full text-black text-xl h-[4rem] "
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="bg-gray-400 w-full text-black text-xl h-[5rem] m-20"
+            className="bg-gray-400 w-full text-black text-xl h-[4rem] "
           >
             Save
           </button>

@@ -6,6 +6,7 @@ import { MdLogout } from "react-icons/md";
 import { MdOutlineInventory2 } from "react-icons/md";
 import InventoryContent from "../components/InventoryContent";
 import ProfileContent from "../components/ProfileContent";
+import { CgProfile } from "react-icons/cg";
 
 function PhamacyDashboard() {
   const navigate = useNavigate();
@@ -13,9 +14,9 @@ function PhamacyDashboard() {
   return (
     <div className="w-full">
       <Navbar />
-      <div className="flex">
+      <div className="flex w-full fixed">
         <Menu
-          className="w-[15rem] mt-20 text-lg"
+          className="w-[15rem] text-lg"
           onClick={({ key }) => {
             if (key === "SS") {
             } else {
@@ -23,10 +24,10 @@ function PhamacyDashboard() {
             }
           }}
           items={[
-            { label: "Inventory", icon: <MdLogout />, key: "/inventory" },
+            { label: "Inventory", icon: <MdOutlineInventory2 />, key: "/" },
             {
               label: "Profile",
-              icon: <MdOutlineInventory2 />,
+              icon: <CgProfile />,
               key: "/profile",
             },
             {
@@ -37,7 +38,9 @@ function PhamacyDashboard() {
             },
           ]}
         ></Menu>
-        <Content />
+        <div className="overflow-y-scroll w-full h-screen">
+          <Content />
+        </div>
       </div>
     </div>
   );
@@ -45,9 +48,9 @@ function PhamacyDashboard() {
 
 function Content() {
   return (
-    <div className="w-full h-full pt-[8rem] bg-slate-100">
+    <div className="mb-20">
       <Routes>
-        <Route path="/inventory" element={<InventoryContent />} />
+        <Route path="/" element={<InventoryContent />} />
         <Route path="/profile" element={<ProfileContent />} />
         <Route path="/logout" element={<div>Logout</div>} />
       </Routes>

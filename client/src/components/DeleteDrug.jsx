@@ -1,14 +1,27 @@
 import React, { useState } from "react";
-import { FiEdit } from "react-icons/fi";
+import { MdDeleteForever } from "react-icons/md";
 import Popup from "reactjs-popup";
+import Axios from "axios";
+import { toast } from "react-hot-toast";
 
-function DeleteDrug() {
+function DeleteDrug(props) {
   const [showPopup, setShowPopup] = useState(false);
+  const [listOfDrug, setListOfDrug] = useState([]);
+
+  const handleDelete = async (id) => {
+    Axios.delete(
+      `http://localhost:${process.env.REACT_APP_PORT}/delete/${id}`
+    ).then((res) => {
+      // Update the list of drugs after successful deletion
+      setListOfDrug(listOfDrug.filter((drug) => drug.id !== id));
+      toast.success("Successfully Deleted drug!");
+    });
+  };
   return (
     <div>
-      <FiEdit
+      <MdDeleteForever
         onClick={() => setShowPopup(true)}
-        className="text-blue-600 text-xl cursor-pointer"
+        className="text-red-600 text-2xl cursor-pointer"
       />
       <Popup
         position="right center"
@@ -28,7 +41,10 @@ function DeleteDrug() {
               >
                 Cancel
               </button>
-              <button className=" bg-red-500 w-full text-white text-xl h-[4rem]">
+              <button
+                onClick={() => handleDelete(props.id)}
+                className="bg-red-500 w-full text-white text-xl h-[4rem]"
+              >
                 Delete
               </button>
             </div>

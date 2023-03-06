@@ -2,9 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const DrugModel = require("./models/Drug");
 const UserModel = require("./models/User");
+const AdminModel = require("./models/Admin");
+const Admin = require("./models/Admin");
+const User = require("./models/Admin");
+const router = express.Router();
 
 app.use(express.json());
 app.use(cors());
@@ -15,7 +20,11 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
-);
+).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('Error connecting to MongoDB', err);
+});
 
 app.get("/getdrug", async (req, res) => {
   try {
@@ -63,6 +72,16 @@ app.get("/getuser", async (req, res) => {
   }
 });
 
+app.get("/getadmin", async (req, res) => {
+  try {
+    const AdminModel = await AdminModel.find();
+    res.send(AdminModel);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
+});
+
 app.delete("/deleteuser/:id", async (req, res) => {
   try {
     const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
@@ -73,26 +92,57 @@ app.delete("/deleteuser/:id", async (req, res) => {
   }
 });
 
-
 // Update user verification status
-app.put('/users/:id/verification', (req, res) => {
+app.put("/users/:id/verification", (req, res) => {
   const id = req.params.id;
   const verification = req.body.verification;
 
   UserModel.findByIdAndUpdate(id, { verification: verification }, { new: true })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return res.status(404).send({
-          message: `User with ID ${id} not found.`
+          message: `User with ID ${id} not found.`,
         });
       }
       res.send(user);
-    }).catch(err => {
+    })
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || 'Error updating user verification status.'
+        message: err.message || "Error updating user verification status.",
       });
     });
 });
+
+app.post('/admin/register', (req, res) => {
+  const newUser = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password
+  });
+  newUser.save()
+    .then(() => res.json('User added'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+app.post('/admin/login', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  User.findOne({ email })
+    .then(user => {
+      if (!user) {
+        return res.status(404).json('User not found');
+      }
+
+      if (user.password !== password) {
+        return res.status(401).json('Incorrect password');
+      }
+
+      res.json('Login successful');
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 app.listen(3003, () => {
   console.log("server running on port 3003...");

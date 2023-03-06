@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdClose, MdDone } from "react-icons/md";
 import UserVerification from "./Verification";
+import toast, { Toaster } from "react-hot-toast";
 
 function AdminDashboard() {
   const [userlist, setUserlist] = useState([]);
@@ -38,6 +39,7 @@ function AdminDashboard() {
       .then((res) => {
         // Update the list of user after successful deletion
         setListOfUser(listOfUser.filter((user) => user.id !== id));
+        toast.success("Successfully Deleted User!");
       });
   };
 
