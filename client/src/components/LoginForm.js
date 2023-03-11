@@ -1,65 +1,55 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../actions/authActions';
+// import { useState } from "react";
 
-const LoginForm = () => {
-  const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+// function LoginForm() {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
 
-  const { email, password } = formData;
+//   async function loginUser(event) {
+//     event.preventDefault();
 
-  const handleChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+//     const response = await fetch("http://localhost:1338/api/login", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         email,
+//         password,
+//       }),
+//     });
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(loginUser(formData));
-  };
+//     const data = await response.json();
+//     if (data.user) {
+//       localStorage.setItem("token", data.user);
+//       alert("Login successful");
+//       window.location.href = "/";
+//     } else {
+//       alert("Please check your username and password");
+//     }
+//   }
 
-  return (
-    <div className="row">
-      <div className="col-md-6 mx-auto">
-        <div className="card mt-5">
-          <div className="card-header">
-            <h4>Login</h4>
-          </div>
-          <div className="card-body">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  name="email"
-                  value={email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <h1>Login</h1>
+//       <form onSubmit={loginUser}>
+//         <input
+//           value={email}
+//           onChange={(e) => setEmail(e.target.value)}
+//           type="email"
+//           placeholder="Email"
+//         />
+//         <br />
+//         <input
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//           type="password"
+//           placeholder="Password"
+//         />
+//         <br />
+//         <input type="submit" value="Login" />
+//       </form>
+//     </div>
+//   );
+// }
 
-export default LoginForm;
+// export default LoginForm;

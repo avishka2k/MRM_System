@@ -33,6 +33,11 @@ function AdminDashboard() {
       });
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   const handleDeleteUser = (id) => {
     axios
       .delete(`http://localhost:${process.env.REACT_APP_PORT}/deleteuser/${id}`)
@@ -48,7 +53,9 @@ function AdminDashboard() {
       <div className="z-[1000] bg-white fixed w-full h-20 flex">
         <div className="container m-auto justify-between flex">
           <div className="font-bold text-xl">LOGO</div>
-          <div className="">Logout</div>
+          <div onClick={handleLogout} className=" cursor-pointer">
+            Logout
+          </div>
         </div>
       </div>
       <div className="w-full h-screen pt-[10rem] bg-slate-100  text-black">

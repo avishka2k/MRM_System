@@ -2,29 +2,31 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const DrugModel = require("./models/Drug");
 const UserModel = require("./models/User");
 const AdminModel = require("./models/Admin");
 const Admin = require("./models/Admin");
-const User = require("./models/Admin");
-const router = express.Router();
+const PharmacyModel = require("./models/Pharmacy");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(
-  "mongodb+srv://curdapp:xIjbrG14uB4YzkW0@cluster0.ica60qt.mongodb.net/medihelp?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-).then(() => {
-  console.log('Connected to MongoDB');
-}).catch(err => {
-  console.error('Error connecting to MongoDB', err);
-});
+mongoose
+  .connect(
+    "mongodb+srv://curdapp:xIjbrG14uB4YzkW0@cluster0.ica60qt.mongodb.net/medihelp?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB", err);
+  });
 
 app.get("/getdrug", async (req, res) => {
   try {
@@ -113,36 +115,53 @@ app.put("/users/:id/verification", (req, res) => {
     });
 });
 
-app.post('/admin/register', (req, res) => {
-  const newUser = new User({
-    name: req.body.name,
+//pharmacies register
+app.post("/pharmacies/register", async (req, res) => {
+  try {
+    const newPassword = await bcrypt.hash(req.body.password, 10);
+    await PharmacyModel.create({
+      pname: req.body.pname,
+      email: req.body.email,
+      password: newPassword,
+      address: req.body.address,
+      number: req.body.number,
+      license: req.body.license,
+      verification: req.body.verification,
+    });
+    res.json({ status: "ok" });
+  } catch (err) {
+    res.json({ status: "error", error: "Duplicate email" });
+  }
+});
+//pharmacies login
+app.post("/pharmacies/login", async (req, res) => {
+  const user = await PharmacyModel.findOne({
     email: req.body.email,
-    password: req.body.password
   });
-  newUser.save()
-    .then(() => res.json('User added'))
-    .catch(err => res.status(400).json('Error: ' + err));
+
+  if (!user) {
+    return { status: "error", error: "Invalid login" };
+  }
+
+  const isPasswordValid = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
+
+  if (isPasswordValid) {
+    const token = jwt.sign(
+      {
+        pname: user.pname,
+        email: user.email,
+      },
+      "secret123"
+    );
+
+    return res.json({ status: "ok", user: token });
+  } else {
+    return res.json({ status: "error", user: false });
+  }
 });
-
-app.post('/admin/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  User.findOne({ email })
-    .then(user => {
-      if (!user) {
-        return res.status(404).json('User not found');
-      }
-
-      if (user.password !== password) {
-        return res.status(401).json('Incorrect password');
-      }
-
-      res.json('Login successful');
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
 
 app.listen(3003, () => {
   console.log("server running on port 3003...");

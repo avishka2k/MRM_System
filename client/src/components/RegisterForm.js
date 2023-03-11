@@ -1,77 +1,63 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../actions/authActions";
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
-const RegisterForm = () => {
-  const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+// function RegisterForm() {
+//   const navigate = useNavigate();
+//   const [name, setName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
 
-  const { name, email, password } = formData;
+//   async function registerUser(event) {
+//     event.preventDefault();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+//     const response = await fetch("http://localhost:1338/api/register", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         name,
+//         email,
+//         password,
+//       }),
+//     });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(registerUser(formData));
-  };
+//     const data = await response.json();
 
-  return (
-    <div className="row">
-      <div className="col-md-6 mx-auto">
-        <div className="card mt-5">
-          <div className="card-header">
-            <h4>Register</h4>
-          </div>
-          <div className="card-body">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  name="email"
-                  value={email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Register
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+//     if (data.status === "ok") {
+//       navigate("/login");
+//     }
+//   }
 
-export default RegisterForm;
+//   return (
+//     <div>
+//       <h1>Register</h1>
+//       <form onSubmit={registerUser}>
+//         <input
+//           value={name}
+//           onChange={(e) => setName(e.target.value)}
+//           type="text"
+//           placeholder="Name"
+//         />
+//         <br />
+//         <input
+//           value={email}
+//           onChange={(e) => setEmail(e.target.value)}
+//           type="email"
+//           placeholder="Email"
+//         />
+//         <br />
+//         <input
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//           type="password"
+//           placeholder="Password"
+//         />
+//         <br />
+//         <input type="submit" value="Register" />
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default RegisterForm;

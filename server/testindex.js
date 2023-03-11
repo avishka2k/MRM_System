@@ -1,96 +1,92 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const cors = require("cors");
-
-dotenv.config();
-
 const app = express();
-
-app.use(express.json());
+const cors = require("cors");
+const mongoose = require("mongoose");
+const User = require("./models/user.model");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 app.use(cors());
+app.use(express.json());
 
-mongoose
-  .connect(
-    "mongodb+srv://curdapp:xIjbrG14uB4YzkW0@cluster0.ica60qt.mongodb.net/medihelp?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+mongoose.connect(
+  "mongodb+srv://curdapp:xIjbrG14uB4YzkW0@cluster0.ica60qt.mongodb.net/medihelp?retryWrites=true&w=majority"
+);
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-});
-
-userSchema.pre("save", async function (next) {
-  const user = this;
-  if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, 10);
+app.post("/api/register", async (req, res) => {
+  console.log(req.body);
+  try {
+    const newPassword = await bcrypt.hash(req.body.password, 10);
+    await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: newPassword,
+    });
+    res.json({ status: "ok" });
+  } catch (err) {
+    res.json({ status: "error", error: "Duplicate email" });
   }
-  next();
 });
 
-userSchema.statics.findByCredentials = async function (email, password) {
-  const user = await this.findOne({ email });
+app.post("/api/login", async (req, res) => {
+  const user = await User.findOne({
+    email: req.body.email,
+  });
+
   if (!user) {
-    throw new Error("Unable to login");
+    return { status: "error", error: "Invalid login" };
   }
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    throw new Error("Unable to login");
-  }
-  return user;
-};
 
-userSchema.methods.generateAuthToken = async function () {
-  const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
-  return token;
-};
+  const isPasswordValid = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
 
-const User = mongoose.model("User", userSchema);
+  if (isPasswordValid) {
+    const token = jwt.sign(
+      {
+        name: user.name,
+        email: user.email,
+      },
+      "secret123"
+    );
 
-app.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
-  try {
-    const user = new User({ name, email, password });
-    await user.save();
-    const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
-  } catch (err) {
-    res.status(400).send(err);
+    return res.json({ status: "ok", user: token });
+  } else {
+    return res.json({ status: "error", user: false });
   }
 });
 
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+app.get("/api/quote", async (req, res) => {
+  const token = req.headers["x-access-token"];
+
   try {
-    const user = await User.findByCredentials(email, password);
-    const token = await user.generateAuthToken();
-    res.send({ user, token });
-  } catch (err) {
-    res.status(400).send(err);
+    const decoded = jwt.verify(token, "secret123");
+    const email = decoded.email;
+    const user = await User.findOne({ email: email });
+
+    return res.json({ status: "ok", quote: user.quote });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: "invalid token" });
   }
 });
 
-const port = process.env.PORT || 5000;
+app.post("/api/quote", async (req, res) => {
+  const token = req.headers["x-access-token"];
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+  try {
+    const decoded = jwt.verify(token, "secret123");
+    const email = decoded.email;
+    await User.updateOne({ email: email }, { $set: { quote: req.body.quote } });
+
+    return res.json({ status: "ok" });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: "invalid token" });
+  }
+});
+
+app.listen(1338, () => {
+  console.log("Server started on 1337");
+});

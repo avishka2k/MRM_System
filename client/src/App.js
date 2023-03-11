@@ -1,45 +1,30 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import { useSelector } from "react-redux";
-import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
+import { Toaster } from "react-hot-toast";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProfileContent from "./components/ProfileContent";
+import AdminDashboard from "./pages/AdminDashboard";
+import NotFound from "./pages/NotFound";
+import PhamacyDashboard from "./pages/PhamacyDashboard";
 import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
+import PrivateRoutes from "./routes/ProtectedRoutes";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+const App = () => {
   return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Navigate to="/login" />
-      }
-    />
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+      <Router>
+        <Routes>
+          <Route element={<PrivateRoutes />}>
+            <Route element={<PhamacyDashboard />} path="/" exact />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+          <Route element={<Signin />} path="/login" />
+          <Route element={<Signup />} path="/register" />
+        </Routes>
+      </Router>
+    </>
   );
 };
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route
-          exact
-          path="/"
-          component={
-            <PrivateRoute>
-              <h1>Home Page</h1>
-            </PrivateRoute>
-          }
-        />
-        <Route path="/login" exact component={LoginForm} />
-        <Route path="/register" exact component={RegisterForm} />
-      </Routes>
-    </Router>
-  );
-}
 
 export default App;
