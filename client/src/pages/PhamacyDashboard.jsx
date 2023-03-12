@@ -64,7 +64,7 @@
 
 // export default PhamacyDashboard;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Menu } from "antd";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -74,6 +74,7 @@ import InventoryContent from "../components/InventoryContent";
 import ProfileContent from "../components/ProfileContent";
 import { CgProfile } from "react-icons/cg";
 import LogOut from "../components/LogOut";
+import jwtDecode from 'jwt-decode'
 
 function PhamacyDashboard() {
   const tabs = [
@@ -121,10 +122,21 @@ const Tabs = ({ tabs }) => {
     setActiveTab(tab);
   };
 
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUser(decodedToken);
+    }
+  }, []);
+
   return (
     <>
       <div className="">
-        <Navbar navItem="Phamacy Name" />
+        <Navbar navItem={user.pname} />
         <div className="flex fixed w-full">
           <ul className="w-[15rem] h-screen text-lg">
             {tabs.map((tab) => (

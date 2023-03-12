@@ -163,6 +163,15 @@ app.post("/pharmacies/login", async (req, res) => {
   }
 });
 
+
+app.get('/profile', (req, res) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, 'secret123');
+  const userName = decodedToken.pname; // assuming pname is the user name in the token
+  res.send(`Welcome ${userName} to your profile page!`);
+});
+
+
 app.listen(3003, () => {
   console.log("server running on port 3003...");
 });
