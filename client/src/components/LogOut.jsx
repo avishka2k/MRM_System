@@ -1,28 +1,29 @@
 import React, { useState } from "react";
-import { MdDeleteForever } from "react-icons/md";
 import Popup from "reactjs-popup";
-import Axios from "axios";
+import { MdLogout } from "react-icons/md";
 import { toast } from "react-hot-toast";
 
-function DeleteDrug(props) {
+function LogOut() {
   const [showPopup, setShowPopup] = useState(false);
-  const [listOfDrug, setListOfDrug] = useState([]);
 
-  const handleDelete = async (id) => {
-    Axios.delete(
-      `http://localhost:${process.env.REACT_APP_PORT}/delete/${id}`
-    ).then((res) => {
-      // Update the list of drugs after successful deletion
-      setListOfDrug(listOfDrug.filter((drug) => drug.id !== id));
-      toast.success("Successfully Deleted drug!");
-    });
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+    
+    toast.success("Successfully logged out");
   };
+
   return (
     <div>
-      <MdDeleteForever
+      <li
         onClick={() => setShowPopup(true)}
-        className="text-red-600 text-2xl cursor-pointer"
-      />
+        className="cursor-pointer flex p-2 items-center gap-3"
+      >
+        <MdLogout /> <p>Logout</p>
+      </li>
+
       <Popup
         position="right center"
         open={showPopup}
@@ -30,9 +31,9 @@ function DeleteDrug(props) {
       >
         <div className=" bg-black w-screen items-center flex flex-col h-screen bg-opacity-40">
           <div className=" bg-white w-[30rem] p-5 items-center m-auto">
-            <p className=" font-bold text-2xl text-center">Are you sure ?</p>
+            <p className=" font-bold text-2xl text-center">Are you sure?</p>
             <p className=" text-center my-8">
-              This item will be permanently deleted
+              Are you sure want to sign out?
             </p>
             <div className="flex gap-3">
               <button
@@ -42,10 +43,10 @@ function DeleteDrug(props) {
                 Cancel
               </button>
               <button
-                onClick={() => handleDelete(props.id)}
+                onClick={handleLogout}
                 className="bg-red-500 w-full text-white text-xl h-[4rem]"
               >
-                Delete
+                Sign Out
               </button>
             </div>
           </div>
@@ -55,4 +56,4 @@ function DeleteDrug(props) {
   );
 }
 
-export default DeleteDrug;
+export default LogOut;

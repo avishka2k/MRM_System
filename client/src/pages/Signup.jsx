@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -10,22 +10,52 @@ function Signup() {
   const [address, setAddress] = useState("");
   const [number, setNumber] = useState(0);
   const [license, setLicense] = useState(0);
+  const [errormsg, setErrormsg] = useState("");
+  const navigate = useNavigate();
 
-  const createNewUser = () => {
-    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/createuser`, {
-      email,
-      password,
-      pname,
-      address,
-      verification,
-      number,
-      license,
+  async function registerUser(event) {
+    event.preventDefault();
+
+    if (email.length === 0) {
+      setErrormsg("Email can't be empty");
+      return;
+    } else if (pname.length === 0) {
+      setErrormsg("Name can't be empty");
+      return;
+    } else if (password !== cpassword) {
+      setErrormsg("Passwords don't match");
+      return;
+    } else {
+      setErrormsg("");
+    }
+
+    const response = await fetch(`http://localhost:${process.env.REACT_APP_PORT}/pharmacies/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pname,
+        email,
+        password,
+        address,
+        number,
+        license,
+        verification,
+      }),
     });
-  };
+
+    const data = await response.json();
+
+    if (data.status === "ok") {
+      navigate("/login");
+    }
+  }
 
   return (
     <div className="flex items-center place-content-center h-screen">
       <div className="flex flex-col w-[30rem] gap-5">
+        {errormsg}
         <input
           type="text"
           placeholder="Pharmacy name"
@@ -94,7 +124,7 @@ function Signup() {
           <p>I agree to Terms of Service and Privacy Policy.</p>
         </div>
         <button
-          onClick={createNewUser}
+          onClick={registerUser}
           type="submit"
           className="bg-black text-white text-xl h-[4rem]"
         >

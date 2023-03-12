@@ -1,32 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { MdDeleteForever } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import AddDrug from "./AddDrug";
 import Axios from "axios";
+import DeleteDrug from "./DeleteDrug";
 
 function InventoryContent() {
   const [isOpen, setIsOpen] = useState(false);
   const [listOfDrug, setListOfDrug] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    Axios.get(`http://localhost:${process.env.REACT_APP_PORT}/getdrug`).then((res) => {
-      setListOfDrug(res.data);
-    });
+    Axios.get(`http://localhost:${process.env.REACT_APP_PORT}/getdrug`).then(
+      (res) => {
+        setListOfDrug(res.data);
+      }
+    );
   });
-
-  const handleDelete = (id) => {
-    Axios.delete(`http://localhost:${process.env.REACT_APP_PORT}/delete/${id}`).then((res) => {
-      // Update the list of drugs after successful deletion
-      setListOfDrug(listOfDrug.filter((drug) => drug.id !== id));
-    });
-  };
 
   const handleClose = () => {
     setIsOpen(false);
   };
+
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(listOfDrug.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
   return (
     <>
-      <div className="w-full h-screen bg-slate-100  text-black">
+      <div className="w-full text-black">
         <div className="mx-20">
           <div className="flex justify-between mb-10">
             <p className="font-bold text-2xl">Inventory</p>
@@ -74,10 +84,10 @@ function InventoryContent() {
                 {listOfDrug.length !== 0 ? (
                   listOfDrug &&
                   listOfDrug.length > 0 &&
-                  listOfDrug.map((drug, index) => (
+                  listOfDrug.slice(startIndex, endIndex).map((drug, index) => (
                     // <li key={userObj.id}>{userObj.drugname}</li>
                     <tr key={drug._id} className="bg-white text-black border-b">
-                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4">{startIndex + index + 1}</td>
                       <td className="px-6 py-4">{drug.drugname}</td>
                       <td className="px-6 py-4">{drug.manufacturer}</td>
                       <td className="px-6 py-4">{drug.supplier}</td>
@@ -90,10 +100,7 @@ function InventoryContent() {
                       </td>
                       <td className="px-6 py-4  flex gap-10 items-center">
                         <FiEdit className="text-blue-600 text-xl cursor-pointer" />
-                        <MdDeleteForever
-                          onClick={() => handleDelete(drug._id)}
-                          className="text-red-600 text-2xl cursor-pointer"
-                        />
+                        <DeleteDrug id={drug._id} />
                       </td>
                     </tr>
                   ))
@@ -104,6 +111,26 @@ function InventoryContent() {
                 )}
               </tbody>
             </table>
+            <div className="flex justify-end my-5 gap-3">
+              <button
+                disabled={currentPage === 1}
+                onClick={handlePrevPage}
+                className={`bg-gray-400 px-4 py-2 ${
+                  currentPage === 1 ? "opacity-30" : ""
+                }`}
+              >
+                {"<"}
+              </button>
+              <button
+                disabled={currentPage === totalPages}
+                onClick={handleNextPage}
+                className={`bg-gray-400 px-4 py-2 ${
+                  currentPage === totalPages ? "opacity-30" : ""
+                }`}
+              >
+                {">"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
