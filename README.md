@@ -2,6 +2,7 @@
 <h2>Introduction</h2>
 <p>This is a web application developed using the MERN stack. This web application was developed with full functionality according to the guideline of duothan3.</p>
 
+<!--
 <h2>Installation</h2>
 <ol>
 <li>Clone this repository.</li>
@@ -12,6 +13,7 @@
 <li>Run <code>npm install</code> to install the dependencies for the client.</li>
 <li>Run <code>npm start</code> to run the application.</li>
 </ol>
+-->
 <!--
 <h2>Usage</h2>
 <li>Navigate to the root directory of the application in your terminal.</li>
