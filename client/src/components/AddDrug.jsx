@@ -40,7 +40,7 @@ function AddDrug({ isOpen, onClose }) {
       return;
     }
     try {
-      axios.post(`http://localhost:${process.env.REACT_APP_PORT}/insert`, {
+      axios.post(`${process.env.REACT_APP_API_URL}/insert`, {
         drugname,
         manufacturer,
         supplier,

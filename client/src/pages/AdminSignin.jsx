@@ -10,7 +10,7 @@ function MyApp() {
 
   const handleRegister = () => {
     axios
-      .post(`http://localhost:${process.env.REACT_APP_PORT}/admin/register`, {
+      .post(`${process.env.REACT_APP_API_URL}/admin/register`, {
         name,
         email,
         password,

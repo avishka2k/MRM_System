@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdClose, MdDone } from "react-icons/md";
-import UserVerification from "./Verification";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 function AdminDashboard() {
   const [userlist, setUserlist] = useState([]);
@@ -11,7 +10,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:${process.env.REACT_APP_PORT}/getuser`)
+      .get(`${process.env.REACT_APP_API_URL}/getuser`)
       .then((res) => {
         setUserlist(res.data);
       });
@@ -20,7 +19,7 @@ function AdminDashboard() {
   const handleVerification = (userId) => {
     axios
       .put(
-        `http://localhost:${process.env.REACT_APP_PORT}/users/${userId}/verification`,
+        `${process.env.REACT_APP_API_URL}/users/${userId}/verification`,
         {
           verification: true,
         }
@@ -40,7 +39,7 @@ function AdminDashboard() {
 
   const handleDeleteUser = (id) => {
     axios
-      .delete(`http://localhost:${process.env.REACT_APP_PORT}/deleteuser/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/deleteuser/${id}`)
       .then((res) => {
         // Update the list of user after successful deletion
         setListOfUser(listOfUser.filter((user) => user.id !== id));
