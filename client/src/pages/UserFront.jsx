@@ -9,7 +9,7 @@ function UserFront() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:${process.env.REACT_APP_PORT}/user/getdrug`)
+      .get(`${process.env.REACT_APP_API_URL}/user/getdrug`)
       .then((response) => {
         setAPIData(response.data);
       });

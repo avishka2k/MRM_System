@@ -22,7 +22,7 @@ function InventoryContent() {
 
   useEffect(() => {
     Axios.get(
-      `http://localhost:${process.env.REACT_APP_PORT}/getdrug/${user.email}`
+      `${process.env.REACT_APP_API_URL}/getdrug/${user.email}`
     ).then((res) => {
       setListOfDrug(res.data);
     });

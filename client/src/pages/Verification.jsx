@@ -6,7 +6,7 @@ function Verification() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:${process.env.REACT_APP_PORT}/getuser`)
+      .get(`${process.env.REACT_APP_API_URL}/getuser`)
       .then((res) => {
         setgetuser(res.data);
       });

@@ -4,18 +4,17 @@ const app = express();
 const cors = require("cors");
 const DrugModel = require("./models/Drug");
 const UserModel = require("./models/User");
-const AdminModel = require("./models/Admin");
-const Admin = require("./models/Admin");
 const PharmacyModel = require("./models/Pharmacy");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
 
 mongoose
   .connect(
-    "mongodb+srv://curdapp:xIjbrG14uB4YzkW0@cluster0.ica60qt.mongodb.net/medihelp?retryWrites=true&w=majority",
+    process.env.REACT_APP_MONGO_API,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -174,6 +173,6 @@ app.post("/pharmacies/login", async (req, res) => {
   }
 });
 
-app.listen(3003, () => {
-  console.log("server running on port 3003...");
+app.listen(process.env.REACT_APP_SERVER_PORT, () => {
+  console.log(`server running on port ${process.env.REACT_APP_SERVER_PORT}`);
 });

@@ -10,7 +10,7 @@ function DeleteDrug(props) {
 
   const handleDelete = async (id) => {
     Axios.delete(
-      `http://localhost:${process.env.REACT_APP_PORT}/delete/${id}`
+      `${process.env.REACT_APP_API_URL}/delete/${id}`
     ).then((res) => {
       // Update the list of drugs after successful deletion
       setListOfDrug(listOfDrug.filter((drug) => drug.id !== id));

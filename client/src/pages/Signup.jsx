@@ -30,7 +30,7 @@ function Signup() {
     }
 
     const response = await fetch(
-      `http://localhost:${process.env.REACT_APP_PORT}/pharmacies/register`,
+      `${process.env.REACT_APP_API_URL}/pharmacies/register`,
       {
         method: "POST",
         headers: {

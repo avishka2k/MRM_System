@@ -10,7 +10,7 @@ function Signin() {
     event.preventDefault();
 
     const response = await fetch(
-      `http://localhost:${process.env.REACT_APP_PORT}/pharmacies/login`,
+      `${process.env.REACT_APP_API_URL}/pharmacies/login`,
       {
         method: "POST",
         headers: {
