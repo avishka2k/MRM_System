@@ -1,58 +1,93 @@
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { Menu } from "antd";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { MdLogout } from "react-icons/md";
 import { MdOutlineInventory2 } from "react-icons/md";
 import InventoryContent from "../components/InventoryContent";
 import ProfileContent from "../components/ProfileContent";
+import { CgProfile } from "react-icons/cg";
+import LogOut from "../components/LogOut";
+import jwtDecode from 'jwt-decode'
 
 function PhamacyDashboard() {
-  const navigate = useNavigate();
+  const tabs = [
+    {
+      icon: <MdOutlineInventory2 />,
+      label: "Inventory",
+      content: <InventoryContent />,
+    },
+    { icon: <CgProfile />, label: "Profile", content: <ProfileContent /> },
+  ];
 
   return (
-    <div className="w-full">
-      <Navbar />
-      <div className="flex">
-        <Menu
-          className="w-[15rem] mt-20 text-lg"
-          onClick={({ key }) => {
-            if (key === "SS") {
-            } else {
-              navigate(key);
-            }
-          }}
-          items={[
-            { label: "Inventory", icon: <MdLogout />, key: "/inventory" },
-            {
-              label: "Profile",
-              icon: <MdOutlineInventory2 />,
-              key: "/profile",
-            },
-            {
-              label: "Logout",
-              icon: <MdLogout />,
-              danger: true,
-              key: "/logout",
-            },
-          ]}
-        ></Menu>
-        <Content />
+    <div>
+      <Tabs tabs={tabs} />
+    </div>
+  );
+}
+
+const Tab = ({ icon, label, isActive, onClick }) => {
+  return (
+    <li
+      className={`cursor-pointer flex p-2 items-center gap-3 ${
+        isActive ? "active bg-blue-100 text-blue-800" : ""
+      }`}
+      onClick={onClick}
+    >
+      {icon}
+      {label}
+    </li>
+  );
+};
+
+const TabContent = ({ content }) => {
+  return (
+    <div className=" w-full h-screen pb-20 overflow-y-scroll scrollbar-hide">
+      {content}
+    </div>
+  );
+};
+
+const Tabs = ({ tabs }) => {
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUser(decodedToken);
+    }
+  }, []);
+
+  return (
+    <>
+      <div className="">
+        <Navbar navItem={user.email} />
+        <div className="flex fixed w-full">
+          <ul className="w-[15rem] h-screen text-lg">
+            {tabs.map((tab) => (
+              <Tab
+                key={tab.label}
+                label={tab.label}
+                icon={tab.icon}
+                isActive={tab === activeTab}
+                onClick={() => handleTabClick(tab)}
+              />
+            ))}
+            <LogOut/>
+          </ul>
+          
+          <TabContent content={activeTab.content} />
+        </div>
       </div>
-    </div>
+    </>
   );
-}
-
-function Content() {
-  return (
-    <div className="w-full h-full pt-[8rem] bg-slate-100">
-      <Routes>
-        <Route path="/inventory" element={<InventoryContent />} />
-        <Route path="/profile" element={<ProfileContent />} />
-        <Route path="/logout" element={<div>Logout</div>} />
-      </Routes>
-    </div>
-  );
-}
+};
 
 export default PhamacyDashboard;

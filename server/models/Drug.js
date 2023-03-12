@@ -29,6 +29,10 @@ const Drug = new mongoose.Schema({
     type: String,
     require: true,
   },
+  pharmacy: {
+    type: String,
+    require: true,
+  },
 });
 
 const DrugModel = mongoose.model("drugs", Drug);

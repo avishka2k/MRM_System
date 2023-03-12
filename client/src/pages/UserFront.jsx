@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function UserFront() {
   const [APIData, setAPIData] = useState([]);
@@ -8,7 +9,7 @@ function UserFront() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:${process.env.REACT_APP_PORT}/getdrug`)
+      .get(`http://localhost:${process.env.REACT_APP_PORT}/user/getdrug`)
       .then((response) => {
         setAPIData(response.data);
       });
@@ -29,20 +30,29 @@ function UserFront() {
     }
   };
 
-  // useEffect(() => {
-  //   axios.get(`http://localhost:${process.env.REACT_APP_PORT}/getdrug`).then((res) => {
-  //     setListOfDrugs(res.data);
-  //   });
-  // });
+  const showall = () => {
+    setSearchInput("");
+  };
+
   return (
     <div>
       <div className="bg-white fixed w-full h-20 flex">
-        <div className="container m-auto justify-between flex">
+        <div className="container m-auto justify-between flex items-center">
           <div className="font-bold text-xl">LOGO</div>
-          <div className="">Show all pharmacies</div>
+          <div className="flex gap-5 items-center">
+            <div onClick={showall} className="cursor-pointer">
+              Show all pharmacies
+            </div>
+            <Link
+              className="border-black border text-xl px-5 py-2 placeholder:text-black focus:border-none"
+              to="/pharmacy-login"
+            >
+              Login
+            </Link>
+          </div>
         </div>
       </div>
-      <div className="w-full h-screen pt-[10rem] px-[30rem] bg-slate-100  text-black">
+      <div className="w-full pb-20 pt-[10rem] px-[30rem] bg-slate-100  text-black">
         <div className="container  m-auto">
           <div className="flex">
             <select
