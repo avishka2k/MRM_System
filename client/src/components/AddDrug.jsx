@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import jwtDecode from 'jwt-decode'
 
 function AddDrug({ isOpen, onClose }) {
   const [drugname, setDrugname] = useState("");
@@ -11,6 +12,17 @@ function AddDrug({ isOpen, onClose }) {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [drugdatapy, setDrugdatapy] = useState([]);
+
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUser(decodedToken);
+    }
+  }, []);
 
   const addToList = () => {
     if (drugname.length === 0) {
@@ -36,6 +48,7 @@ function AddDrug({ isOpen, onClose }) {
         exDate,
         quantity,
         price,
+        pharmacy: user.email
       });
       toast.success("Successfully Added drug!");
     } catch (err) {

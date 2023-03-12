@@ -1,7 +1,18 @@
-import React, { useState } from "react";
+import jwtDecode from "jwt-decode";
+import React, { useEffect, useState } from "react";
 
 function ProfileContent() {
   const [pname, setPname] = useState();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUser(decodedToken);
+    }
+  }, []);
+
   return (
     <div className="w-full max-w-[60rem] m-auto h-full text-black overflow-y-scroll">
       <form action="">

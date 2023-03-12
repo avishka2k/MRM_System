@@ -28,10 +28,22 @@ mongoose
     console.error("Error connecting to MongoDB", err);
   });
 
-app.get("/getdrug", async (req, res) => {
+app.get("/user/getdrug", async (req, res) => {
   try {
     const DrugModels = await DrugModel.find();
     res.send(DrugModels);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.get("/getdrug/:emaiId", async (req, res) => {
+  try {
+    const { pharmacy } = req.query;
+
+    const drugs = await DrugModel.find({ pharmacy: req.params.emaiId });
+    res.send(drugs);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal server error");
@@ -60,7 +72,6 @@ app.post("/createuser", async (req, res) => {
   const user = req.body;
   const newUser = new UserModel(user);
   await newUser.save();
-
   res.json(user);
 });
 
@@ -162,15 +173,6 @@ app.post("/pharmacies/login", async (req, res) => {
     return res.json({ status: "error", user: false });
   }
 });
-
-
-app.get('/profile', (req, res) => {
-  const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, 'secret123');
-  const userName = decodedToken.pname; // assuming pname is the user name in the token
-  res.send(`Welcome ${userName} to your profile page!`);
-});
-
 
 app.listen(3003, () => {
   console.log("server running on port 3003...");

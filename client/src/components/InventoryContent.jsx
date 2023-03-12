@@ -3,18 +3,29 @@ import { FiEdit } from "react-icons/fi";
 import AddDrug from "./AddDrug";
 import Axios from "axios";
 import DeleteDrug from "./DeleteDrug";
+import jwtDecode from "jwt-decode";
 
 function InventoryContent() {
   const [isOpen, setIsOpen] = useState(false);
   const [listOfDrug, setListOfDrug] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [user, setUser] = useState({});
+
   useEffect(() => {
-    Axios.get(`http://localhost:${process.env.REACT_APP_PORT}/getdrug`).then(
-      (res) => {
-        setListOfDrug(res.data);
-      }
-    );
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUser(decodedToken);
+    }
+  }, []);
+
+  useEffect(() => {
+    Axios.get(
+      `http://localhost:${process.env.REACT_APP_PORT}/getdrug/${user.email}`
+    ).then((res) => {
+      setListOfDrug(res.data);
+    });
   });
 
   const handleClose = () => {
